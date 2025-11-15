@@ -34,11 +34,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Debug AWS env
+        run: |
+          echo "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}"
+          echo "AWS_SECRET_ACCESS_KEY length: ${#AWS_SECRET_ACCESS_KEY}"
+        shell: bash
 
       - name: Set up Terraform version
         uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.6.3
+        # with:
+        #   terraform_version: 1.6.3
       - name: Terraform init
         id: init
         run: terraform init -backend-config="bucket=${{ env.BUCKET_TF_STATE }}"
